@@ -7,7 +7,7 @@ import { ArrowRight } from 'lucide-react';
 
 const Subjects: React.FC = () => {
   return (
-    <div className="pt-28 px-6 md:px-12 lg:px-20 min-h-screen">
+    <div className="relative z-10 pt-28 px-6 md:px-12 lg:px-20 min-h-screen">
         <div className="mb-12">
             <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">Virtual Laboratories</h1>
             <p className="text-gray-400 text-lg">Select a department to access equipment and simulations.</p>

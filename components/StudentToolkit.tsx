@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, Calculator, Shield, Cpu, Atom, Activity, Hash, 
   Dna, Sigma, FlaskConical, Flame, Skull, Zap, AlertTriangle, 
@@ -1055,6 +1055,16 @@ const StudentToolkit: React.FC = () => {
   const [activeSubject, setActiveSubject] = useState("Physics");
   const [view3D, setView3D] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (activeTool) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [activeTool]);
+
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
@@ -1081,7 +1091,7 @@ const StudentToolkit: React.FC = () => {
       {/* Modal / Overlay for Tool */}
       <AnimatePresence>
         {activeTool && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-slate-950 backdrop-blur-md">
             <MotionDiv
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
