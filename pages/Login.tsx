@@ -55,7 +55,8 @@ const Login: React.FC = () => {
         }
       } else {
         await signInWithEmailAndPassword(auth, email, password);
-        navigate('/home');
+        navigate(userRole === 'Teacher' ? '/teacher-dashboard' : '/student-dashboard');
+
       }
     } catch (err: any) {
       setError(err.message || 'Authentication failed');
