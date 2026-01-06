@@ -39,11 +39,12 @@ const AppContent: React.FC = () => {
   const isLoginView = location.pathname === '/login';
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="font-sans antialiased min-h-screen flex flex-col">
       <ScrollToTop />
+
       {!isLoginView && <Navbar />}
 
-      <main className="flex-1">
+      <main className="flex-1 flex flex-col">
         <Routes>
           {/* ENTRY */}
           <Route path="/" element={<Navigate to="/login" replace />} />
@@ -51,7 +52,7 @@ const AppContent: React.FC = () => {
           {/* AUTH */}
           <Route path="/login" element={<Login />} />
 
-          {/* APP */}
+          {/* MAIN APP */}
           <Route path="/home" element={<Home />} />
           <Route path="/subjects" element={<Subjects />} />
           <Route path="/subjects/:subjectId" element={<SubjectView />} />
