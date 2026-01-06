@@ -9,6 +9,7 @@ import {
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import Login from './pages/Login';
 import Home from './pages/Home';
