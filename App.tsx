@@ -61,8 +61,24 @@ const AppContent: React.FC = () => {
           <Route path="/tutor" element={<AITutor />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/student-dashboard" element={<StudentDashboard />} />
-          <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+          <Route
+  path="/student-dashboard"
+  element={
+    <ProtectedRoute>
+      <StudentDashboard />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/teacher-dashboard"
+  element={
+    <ProtectedRoute>
+      <TeacherDashboard />
+    </ProtectedRoute>
+  }
+/>
+
           <Route path="/profile" element={<Profile />} />
 
           {/* FALLBACK */}
