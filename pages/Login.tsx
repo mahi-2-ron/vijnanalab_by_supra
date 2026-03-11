@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Atom, Mail, Lock, User, ArrowRight, Check, BookOpen, Building, Globe, Loader2, AlertCircle } from 'lucide-react';
 import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, db, setDoc, doc, getDoc } from '../services/firebase';
+import { useAuth } from '../services/AuthContext';
 
 const AVATARS = [
     'bg-blue-500', 'bg-purple-500', 'bg-green-500', 'bg-red-500',
@@ -11,6 +12,7 @@ const AVATARS = [
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
+    const { user: authUser, role: authRole, loading: authLoading } = useAuth();
     const [isSignup, setIsSignup] = useState(false);
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -23,9 +25,17 @@ const Login: React.FC = () => {
     const [profileData, setProfileData] = useState({
         grade: '',
         institution: '',
+        role: 'Student' as 'Student' | 'Teacher',
         language: 'English',
         avatar: 'bg-blue-500'
     });
+
+    React.useEffect(() => {
+        if (!authLoading && authUser) {
+            const path = authRole === 'Teacher' ? '/teacher-dashboard' : '/student-dashboard';
+            navigate(path);
+        }
+    }, [authUser, authRole, authLoading, navigate]);
 
     const handleSignup = async () => {
         if (step === 1) {
@@ -41,12 +51,11 @@ const Login: React.FC = () => {
         await setDoc(doc(db, "users", user.uid), {
             name,
             email,
-            role: 'Student',
             ...profileData,
             progress: { physics: 0, chemistry: 0, biology: 0, math: 0, cs: 0 },
             createdAt: new Date().toISOString()
         });
-        navigate('/home');
+        navigate(profileData.role === 'Teacher' ? '/teacher-dashboard' : '/student-dashboard');
     };
 
     const handleLogin = async () => {
@@ -172,6 +181,21 @@ const Login: React.FC = () => {
                         {/* SIGNUP STEP 2: PROFILE */}
                         {isSignup && step === 2 && (
                             <div className="space-y-4 animate-in slide-in-from-right-8 fade-in duration-300">
+                                <div className="relative group">
+                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-400 transition-colors" size={18} />
+                                    <select
+                                        className="w-full bg-black/20 border border-white/10 rounded-xl py-3.5 pl-12 pr-10 text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/5 transition-all appearance-none cursor-pointer"
+                                        value={profileData.role}
+                                        onChange={e => setProfileData({ ...profileData, role: e.target.value as any })}
+                                        required
+                                    >
+                                        <option className="bg-slate-900 text-white" value="Student">I am a Student</option>
+                                        <option className="bg-slate-900 text-white" value="Teacher">I am a Teacher</option>
+                                    </select>
+                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+                                    </div>
+                                </div>
                                 <div className="relative group">
                                     <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-blue-400 transition-colors" size={18} />
                                     <select

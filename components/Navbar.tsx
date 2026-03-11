@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
 
   // ✅ SINGLE SOURCE OF TRUTH
-  const { user } = useAuth();
+  const { user, role } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -77,11 +77,10 @@ const Navbar: React.FC = () => {
           <Link
             key={item.path}
             to={item.path}
-            className={`relative text-sm font-medium transition-colors duration-300 ${
-              isActive(item.path)
-                ? 'text-slate-900 dark:text-white'
-                : 'text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-300'
-            }`}
+            className={`relative text-sm font-medium transition-colors duration-300 ${isActive(item.path)
+              ? 'text-slate-900 dark:text-white'
+              : 'text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-300'
+              }`}
           >
             {item.label}
             {isActive(item.path) && (
@@ -89,6 +88,20 @@ const Navbar: React.FC = () => {
             )}
           </Link>
         ))}
+        {user && (
+          <Link
+            to={role === 'Teacher' ? '/teacher-dashboard' : '/student-dashboard'}
+            className={`relative text-sm font-medium transition-colors duration-300 ${isActive('/student-dashboard') || isActive('/teacher-dashboard')
+              ? 'text-slate-900 dark:text-white'
+              : 'text-slate-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-300'
+              }`}
+          >
+            Dashboard
+            {(isActive('/student-dashboard') || isActive('/teacher-dashboard')) && (
+              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full" />
+            )}
+          </Link>
+        )}
       </div>
 
       {/* Auth Button */}
