@@ -123,15 +123,17 @@ const ProjectArchitect: React.FC = () => {
                     >
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="space-y-4">
-                                <label htmlFor="topic-input" className="block text-sm font-bold text-slate-500 uppercase tracking-widest">General Topic</label>
-                                <input 
-                                    id="topic-input"
-                                    type="text" 
-                                    placeholder="e.g. Thermodynamics, Genetics, Quantum Entanglement"
-                                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-amber-500/50"
-                                    value={formData.topic}
-                                    onChange={e => setFormData({...formData, topic: e.target.value})}
-                                />
+                                <label htmlFor="topic-input" className="block text-sm font-bold text-slate-500 uppercase tracking-widest">
+                                    General Topic
+                                    <input 
+                                        id="topic-input"
+                                        type="text" 
+                                        placeholder="e.g. Thermodynamics, Genetics, Quantum Entanglement"
+                                        className="w-full mt-2 bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-amber-500/50"
+                                        value={formData.topic}
+                                        onChange={e => setFormData({...formData, topic: e.target.value})}
+                                    />
+                                </label>
                             </div>
                             <div className="space-y-4">
                                 <label className="block text-sm font-bold text-slate-500 uppercase tracking-widest">Complexity Level</label>
