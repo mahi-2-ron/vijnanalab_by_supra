@@ -127,25 +127,25 @@ const Login: React.FC = () => {
         <div className="min-h-screen w-full flex items-center justify-center p-4 relative overflow-hidden bg-[#020617]">
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-                <div className="absolute top-1/4 -left-20 w-96 h-96 bg-blue-600/20 rounded-full blur-[100px]" />
-                <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-600/20 rounded-full blur-[100px]" />
+                <div className="absolute top-1/4 -left-20 w-96 h-96 bg-emerald-600/10 rounded-full blur-[100px]" />
+                <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-indigo-600/10 rounded-full blur-[100px]" />
             </div>
 
             <div className="w-full max-w-4xl bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden flex flex-col md:flex-row relative z-10">
 
                 {/* Left Side - Visual */}
-                <div className="md:w-1/2 p-8 md:p-12 bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex flex-col justify-between relative overflow-hidden">
+                <div className="md:w-1/2 p-8 md:p-12 bg-gradient-to-br from-slate-900 to-indigo-950 flex flex-col justify-between relative overflow-hidden">
                     <div className="relative z-10">
                         <div className="flex items-center gap-3 mb-8">
-                            <div className="p-2 bg-blue-600 rounded-lg">
+                            <div className="p-2 bg-emerald-600 rounded-lg shadow-lg shadow-emerald-500/20">
                                 <Atom className="text-white w-6 h-6" />
                             </div>
-                            <span className="text-2xl font-display font-bold text-white">Vijnana Lab</span>
+                            <span className="text-2xl font-display font-bold text-white tracking-tight">Vijnana Lab</span>
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
                             {isSignup ? "Start Your Scientific Journey." : "Welcome Back, Explorer."}
                         </h2>
-                        <p className="text-blue-100/80 leading-relaxed">
+                        <p className="text-emerald-100/70 leading-relaxed font-light">
                             Perform real-time simulations, clear doubts instantly, and grow with smart AI guidance.
                         </p>
                     </div>
@@ -301,7 +301,7 @@ const Login: React.FC = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold shadow-lg shadow-blue-600/20 transition-all transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-500 hover:to-emerald-500 text-white font-bold shadow-lg shadow-indigo-600/20 transition-all transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                             {loading && <Loader2 className="animate-spin" size={20} />}
                             {!loading && isSignup && step === 1 && (

@@ -127,7 +127,7 @@ const Home: React.FC = () => {
                 </MotionSpan>
               </AnimatePresence>
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 animate-gradient-x">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-sky-600 to-emerald-600 dark:from-indigo-400 dark:via-sky-400 dark:to-emerald-400 animate-gradient-x">
                 Like Never Before.
               </span>
             </h1>
@@ -164,7 +164,7 @@ const Home: React.FC = () => {
               <Link to="/tutor">
                  <MotionDiv whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                     <button className="px-8 py-4 rounded-full glass-panel text-slate-900 dark:text-white font-bold hover:bg-slate-100 dark:hover:bg-white/10 border border-slate-200 dark:border-white/20 transition-all duration-300 flex items-center gap-2">
-                    AI Tutor <Bot size={20} className="text-purple-600 dark:text-purple-400 animate-bounce" />
+                    AI Tutor <Bot size={20} className="text-emerald-600 dark:text-emerald-400 animate-bounce" />
                     </button>
                 </MotionDiv>
               </Link>
@@ -241,8 +241,8 @@ const Home: React.FC = () => {
 
       {/* Features / Promo */}
       <section className="px-6 md:px-12 lg:px-20 py-16 mb-12 z-10 relative">
-        <GlassCard className="relative overflow-hidden !p-0" color="blue">
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-600/10 to-purple-600/10 dark:from-blue-600/20 dark:to-purple-600/20 animate-gradient-x"></div>
+        <GlassCard className="relative overflow-hidden !p-0" color="sky">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-indigo-600/10 to-emerald-600/10 dark:from-indigo-600/20 dark:to-emerald-600/20 animate-gradient-x"></div>
             <div className="relative z-10 flex flex-col md:flex-row items-center">
                 <div className="p-12 md:w-2/3">
                     <h2 className="text-3xl font-display font-bold mb-4 text-slate-900 dark:text-white">Stuck on a complex problem?</h2>
@@ -268,14 +268,14 @@ const Home: React.FC = () => {
       <section className="px-6 md:px-12 lg:px-20 py-16 grid grid-cols-1 md:grid-cols-2 gap-8 z-10 relative">
         
         {/* Students */}
-        <GlassCard className="p-8 md:p-10 relative overflow-hidden group" color="purple">
+        <GlassCard className="p-8 md:p-10 relative overflow-hidden group" color="indigo">
             <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-700 text-purple-600 dark:text-white">
                  <Trophy size={120} />
             </div>
             <div className="relative z-10">
                 <div className="flex items-center gap-4 mb-8">
-                    <div className="w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center shadow-lg shadow-purple-500/20">
-                        <Smile className="text-purple-600 dark:text-purple-400" size={28} />
+                    <div className="w-14 h-14 rounded-2xl bg-indigo-500/20 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                        <Smile className="text-indigo-600 dark:text-indigo-400" size={28} />
                     </div>
                     <h2 className="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-white">Students Love It</h2>
                 </div>
@@ -350,7 +350,7 @@ const Home: React.FC = () => {
 
                     <div className="flex gap-4 items-start">
                         <div className="w-10 h-10 rounded-lg bg-black/5 dark:bg-white/5 flex items-center justify-center shrink-0 mt-1">
-                            <Bot className="text-purple-600 dark:text-purple-400" size={20} />
+                            <Bot className="text-indigo-600 dark:text-indigo-400" size={20} />
                         </div>
                         <div>
                             <h3 className="font-bold text-slate-800 dark:text-white text-lg mb-1">AI Co-Pilot</h3>

@@ -21,12 +21,20 @@
                 200: 'rgba(255, 255, 255, 0.1)',
                 300: 'rgba(255, 255, 255, 0.2)',
               },
+              brand: {
+                50: '#f0f9ff',
+                100: '#e0f2fe',
+                200: '#bae6fd',
+                500: '#0ea5e9',
+                600: '#0284c7',
+                900: '#0c4a6e',
+              },
               neon: {
-                physics: '#4ade80', // green-400
-                chemistry: '#fbbf24', // amber-400
-                biology: '#f87171', // red-400
-                math: '#60a5fa', // blue-400
-                cs: '#c084fc', // purple-400
+                physics: '#0ea5e9', // sky-500
+                chemistry: '#10b981', // emerald-500
+                biology: '#84cc16', // lime-500
+                math: '#f59e0b', // amber-500
+                cs: '#6366f1', // indigo-500
               }
             },
             animation: {
@@ -59,25 +67,25 @@
     <style>
       :root {
         --bg-color: #f8fafc; /* Slate 50 */
-        --text-color: #1e293b; /* Slate 800 */
+        --text-color: #0f172a; /* Slate 900 */
         --glass-bg: rgba(255, 255, 255, 0.7);
-        --glass-border: rgba(0, 0, 0, 0.1);
-        --nav-bg: rgba(255, 255, 255, 0.8);
-        --gradient-1: rgba(124, 58, 237, 0.08);
-        --gradient-2: rgba(59, 130, 246, 0.08);
-        --gradient-3: rgba(236, 72, 153, 0.08);
-        --gradient-4: rgba(16, 185, 129, 0.08);
+        --glass-border: rgba(148, 163, 184, 0.1);
+        --nav-bg: rgba(255, 255, 255, 0.85);
+        --gradient-1: rgba(14, 165, 233, 0.05); /* Sky Blue */
+        --gradient-2: rgba(16, 185, 129, 0.05); /* Emerald */
+        --gradient-3: rgba(245, 158, 11, 0.05); /* Amber */
+        --gradient-4: rgba(99, 102, 241, 0.05); /* Indigo */
       }
       .dark {
-        --bg-color: #0f172a; /* Slate 900 */
-        --text-color: #e2e8f0;
-        --glass-bg: rgba(255, 255, 255, 0.03);
-        --glass-border: rgba(255, 255, 255, 0.1);
-        --nav-bg: rgba(15, 23, 42, 0.7);
-        --gradient-1: rgba(124, 58, 237, 0.15);
-        --gradient-2: rgba(59, 130, 246, 0.15);
-        --gradient-3: rgba(236, 72, 153, 0.15);
-        --gradient-4: rgba(16, 185, 129, 0.15);
+        --bg-color: #020617; /* Slate 950 - deeper than before */
+        --text-color: #f1f5f9;
+        --glass-bg: rgba(15, 23, 42, 0.3);
+        --glass-border: rgba(51, 65, 85, 0.4);
+        --nav-bg: rgba(2, 6, 23, 0.75);
+        --gradient-1: rgba(14, 165, 233, 0.1);
+        --gradient-2: rgba(16, 185, 129, 0.1);
+        --gradient-3: rgba(245, 158, 11, 0.08);
+        --gradient-4: rgba(99, 102, 241, 0.1);
       }
 
       body {

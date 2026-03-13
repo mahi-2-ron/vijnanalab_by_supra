@@ -49,8 +49,8 @@ const Navbar: React.FC = () => {
       {/* Logo */}
       <Link to="/home" className="flex items-center gap-3 group min-w-[200px]">
         <div className="relative">
-          <div className="absolute inset-0 bg-blue-500 blur-lg opacity-50 group-hover:opacity-80 transition-opacity"></div>
-          <Atom className="w-10 h-10 text-blue-600 dark:text-blue-400 relative z-10 transition-colors group-hover:rotate-180 duration-1000 ease-in-out" />
+          <div className="absolute inset-0 bg-emerald-500 blur-lg opacity-30 group-hover:opacity-60 transition-opacity"></div>
+          <Atom className="w-10 h-10 text-emerald-600 dark:text-emerald-400 relative z-10 transition-colors group-hover:rotate-180 duration-1000 ease-in-out" />
         </div>
         <div className="flex flex-col justify-center">
           <AnimatePresence mode="wait">
@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
               className="text-xl md:text-2xl font-display font-bold text-slate-900 dark:text-white tracking-tight leading-none"
             >
               {TITLES[titleIndex].text.split(' ')[0]}{" "}
-              <span className="text-blue-600 dark:text-blue-400">
+              <span className="text-emerald-600 dark:text-emerald-400">
                 {TITLES[titleIndex].text.split(' ')[1]}
               </span>
             </MotionSpan>
