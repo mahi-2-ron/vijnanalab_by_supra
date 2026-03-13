@@ -6,6 +6,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Home', path: '/home' },
   { label: 'Subjects', path: '/subjects' },
   { label: 'AI Tutor', path: '/tutor' },
+  { label: 'Brainstorm', path: '/brainstorm' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];
