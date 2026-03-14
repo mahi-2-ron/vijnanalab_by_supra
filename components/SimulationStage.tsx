@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
     Play, Pause, RotateCcw, Check, 
     Beaker, MousePointer2, 
-    FlaskConical, Calculator, Plus, Minus, RefreshCw,
-    Lightbulb, AlertTriangle, Gauge, ArrowRight, ArrowLeft, Cpu, Flame, Droplets, Ruler, Zap, Power, Eye, Microscope, Binary,
+    FlaskConical, Calculator, RefreshCw,
+    Lightbulb, AlertTriangle, Gauge, ArrowRight, ArrowLeft, Cpu, Flame, Droplets, Ruler, Zap, Eye, Microscope, Binary,
     Activity
 } from 'lucide-react';
 import ScientificPanel from './ScientificPanel';
@@ -14,6 +14,7 @@ import PendulumLab from './labs/PendulumLab';
 import TitrationLab3D from './labs/TitrationLab3D';
 import VernierCalipersLab3D from './labs/VernierCalipersLab3D';
 import ConcaveMirrorLab3D from './labs/ConcaveMirrorLab3D';
+import ScrewGaugeLab3D from './labs/ScrewGaugeLab3D';
 
 interface SimulationStageProps {
   subjectId: string;
@@ -227,60 +228,10 @@ const LAB_SCENARIOS: Record<string, UniversalScenario> = {
 
 // --- MAIN STAGE ---
 const SimulationStage: React.FC<SimulationStageProps> = ({ subjectId, labId, hex, isActive }) => {
-    const [running, setRunning] = useState(false);
-    
-    // Physics State
-    const [pendulum, setPendulum] = useState({ length: 1.0, angle: Math.PI/6, time: 0, period: 2.0 });
-    const [vernier, setVernier] = useState({ pos: 0 }); // P1
-    const [screw, setScrew] = useState({ rotation: 0 }); // P3
-    const [mirror, setMirror] = useState({ u: 30 }); // P5 (u is taken as positive magnitude for slider, handled as negative in logic)
-
-    // Chemistry State
-    const [titration, setTitration] = useState({ vol: 0, running: false, flaskColor: '#e2e8f0' }); 
-
-    // CS State
-    const [logic, setLogic] = useState({ a: false, b: false, type: 'AND' }); // CS1
-
     // Reset State on Lab Change
     useEffect(() => {
-        setRunning(false);
-        setTitration({ vol: 0, running: false, flaskColor: '#e2e8f0' });
-        setVernier({ pos: 0 });
-        setScrew({ rotation: 0 });
-        setMirror({ u: 30 });
-        setLogic({ a: false, b: false, type: 'AND' });
-        setPendulum({ length: 1.0, angle: Math.PI/6, time: 0, period: 2.0 });
+        // Any global lab switch logic
     }, [labId]);
-
-    // Animation Loops
-    useEffect(() => {
-        let interval: any;
-        if (running) {
-            interval = setInterval(() => {
-                // Titration Animation
-                if (labId === 'c1') {
-                    setTitration(prev => {
-                        if (prev.vol >= 50) { setRunning(false); return prev; }
-                        const newVol = prev.vol + 0.2;
-                        let color = '#e2e8f0'; 
-                        if (newVol >= 20) color = '#fbcfe8'; // Pink
-                        if (newVol >= 22) color = '#db2777'; // Dark Pink
-                        return { ...prev, vol: newVol, flaskColor: color };
-                    });
-                }
-                // Pendulum Animation
-                if (labId === 'p2') {
-                    setPendulum(prev => {
-                        const t = prev.time + 0.05;
-                        const w = Math.sqrt(9.8 / prev.length);
-                        const angle = (Math.PI/6) * Math.cos(w * t);
-                        return { ...prev, time: t, angle, period: 2 * Math.PI * Math.sqrt(prev.length/9.8) };
-                    });
-                }
-            }, 50);
-        }
-        return () => clearInterval(interval);
-    }, [running, labId]);
 
     // --- RENDERERS ---
 
@@ -299,105 +250,9 @@ const SimulationStage: React.FC<SimulationStageProps> = ({ subjectId, labId, hex
         return <OhmsLawLab hex={hex} />;
     }
 
-    // P3: SCREW GAUGE
+    // P3: SCREW GAUGE — Full 3D visual lab
     if (labId === 'p3') {
-        const pitch = 1; // 1mm
-        const divisions = 100;
-        const totalRotations = screw.rotation / divisions;
-        const mainScaleReading = Math.floor(totalRotations); // mm
-        const circularScaleReading = Math.round(screw.rotation % divisions);
-        const reading = (mainScaleReading + (circularScaleReading * (pitch/divisions))).toFixed(2);
-        
-        // Visual calculations
-        // 1 rotation moves thimble by 20px visually to reveal 1mm mark
-        const pixelsPerMm = 20;
-        const thimblePos = totalRotations * pixelsPerMm;
-
-        return (
-            <div className="flex h-full bg-slate-100 dark:bg-slate-900">
-            <div className="flex flex-col flex-1 overflow-hidden">
-                <div className="flex-1 flex flex-col items-center justify-center relative p-8 select-none">
-                    <div className="relative flex items-center scale-125 md:scale-150 transform transition-transform">
-                        
-                        {/* U-Frame */}
-                        <div className="w-10 h-32 border-[12px] border-slate-700 rounded-l-full border-r-0 relative">
-                            {/* Anvil */}
-                            <div className="absolute top-1/2 -translate-y-1/2 right-[-10px] w-4 h-3 bg-slate-400 border border-slate-600"></div>
-                        </div>
-                        
-                        {/* Gap/Object */}
-                        <div className="w-16 h-32 flex items-center justify-center relative">
-                             {/* Wire Object appearing when jaws open */}
-                             <div className="h-3 bg-yellow-500 border border-yellow-700 absolute left-[-10px]" style={{ width: `${Math.min(60, thimblePos)}px`, opacity: thimblePos > 0 ? 1 : 0 }}></div>
-                        </div>
-
-                        {/* Spindle (Moves with thimble) */}
-                        <div className="absolute h-3 bg-slate-400 border border-slate-600 left-[40px] top-[58px]" style={{ width: `${60 - Math.min(60, thimblePos)}px` }}></div>
-
-                        {/* Main Scale Sleeve (Fixed) */}
-                        <div className="w-40 h-10 bg-gradient-to-b from-gray-200 to-gray-400 border border-gray-600 flex items-center relative overflow-hidden">
-                            <div className="absolute top-1/2 w-full h-[1px] bg-black"></div>
-                            {/* MM Marks */}
-                            {Array.from({length: 15}).map((_, i) => (
-                                <div key={i} className="absolute" style={{ left: `${i * pixelsPerMm + 10}px` }}>
-                                    <div className="w-[1px] h-2 bg-black absolute bottom-5"></div> {/* Top mark */}
-                                    {/* <div className="w-[1px] h-1.5 bg-black absolute top-5 left-[10px]"></div> Half mm */}
-                                    {i % 5 === 0 && <span className="text-[8px] font-bold absolute top-1 -left-1">{i}</span>}
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Thimble (Rotating & Moving) */}
-                        <div 
-                            className="w-32 h-14 bg-gradient-to-b from-gray-300 to-gray-500 border border-gray-700 rounded-r shadow-[5px_5px_15px_rgba(0,0,0,0.3)] flex items-center relative z-10"
-                            style={{ marginLeft: `-${160 - thimblePos}px` }} // Starts covering scale
-                        >
-                             {/* Beveled Edge with ticks */}
-                             <div className="w-8 h-full border-r border-gray-600 bg-gray-300 relative overflow-hidden">
-                                 <div 
-                                    className="absolute w-full h-[200%] top-[-50%]"
-                                    style={{ transform: `translateY(${-(circularScaleReading * 3)}px)` }}
-                                 >
-                                     {/* Render vertical ticks simulation */}
-                                     {Array.from({length: 120}).map((_, i) => {
-                                         const val = i % 100;
-                                         return (
-                                            <div key={i} className="h-[3px] w-full flex items-center justify-end pr-1 relative">
-                                                <div className={`bg-black ${val % 5 === 0 ? 'w-4' : 'w-2'} h-[1px]`}></div>
-                                                {val % 10 === 0 && <span className="text-[8px] absolute right-5">{val}</span>}
-                                            </div>
-                                         )
-                                     })}
-                                 </div>
-                             </div>
-                             {/* Knurling Pattern */}
-                             <div className="flex-1 h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30"></div>
-                        </div>
-
-                        {/* Ratchet */}
-                        <div className="w-6 h-6 bg-slate-800 rounded-r ml-[-2px] z-0"></div>
-                    </div>
-                </div>
-                
-                <div className="bg-white dark:bg-slate-950 p-6 z-40 border-t border-slate-200 dark:border-white/10 flex gap-8 items-center">
-                    <div className="flex-1">
-                        <label className="text-xs text-slate-500 font-bold uppercase mb-2 block">Rotate Thimble</label>
-                        <input
-                            type="range" min="0" max="1000" step="1"
-                            value={screw.rotation}
-                            onChange={(e)=>setScrew({rotation: parseInt(e.target.value)})}
-                            className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
-                        />
-                    </div>
-                    <div className="text-right bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-white/10">
-                        <div className="text-xs text-slate-500 uppercase font-bold">Diameter</div>
-                        <div className="text-2xl font-mono font-bold text-blue-600 dark:text-blue-400">{reading} mm</div>
-                    </div>
-                </div>
-            </div>
-            <ScientificPanel labId="p3" hex={hex} sliderValue={screw.rotation} />
-        </div>
-        );
+        return <ScrewGaugeLab3D hex={hex} />;
     }
 
     // P5: CONCAVE MIRROR — Full 3D visual lab
