@@ -9,6 +9,7 @@ interface Series {
   color: string;
   label: string;
   dashed?: boolean;
+  errorY?: number[]; // Array of uncertainty values for each point
 }
 
 interface InteractiveGraphProps {
@@ -83,6 +84,19 @@ const InteractiveGraph: React.FC<InteractiveGraphProps> = ({
     URL.revokeObjectURL(url);
   }
 
+  function handleExportCSV() {
+    let csv = `Series,${xLabel},${yLabel},Uncertainty\n`;
+    series.forEach(s => {
+      s.points.forEach((p, i) => {
+        csv += `${s.label},${p.x},${p.y},${s.errorY?.[i] || 0}\n`;
+      });
+    });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'experiment_data.csv'; a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl overflow-hidden">
       {/* Header */}
@@ -93,9 +107,10 @@ const InteractiveGraph: React.FC<InteractiveGraphProps> = ({
             className={`text-[10px] px-2 py-0.5 rounded border transition-colors ${showReg ? 'bg-blue-600 text-white border-blue-500' : 'text-slate-400 border-slate-200 dark:border-white/10'}`}>
             Best Fit
           </button>
-          <button onClick={() => setZoom(z => Math.min(z + 0.25, 2))} className="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-400"><ZoomIn size={12} /></button>
-          <button onClick={() => setZoom(z => Math.max(z - 0.25, 0.5))} className="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-400"><ZoomOut size={12} /></button>
-          <button onClick={handleDownload} className="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-400"><Download size={12} /></button>
+          <button onClick={() => setZoom(z => Math.min(z + 0.25, 2))} className="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-400" title="Zoom In"><ZoomIn size={12} /></button>
+          <button onClick={() => setZoom(z => Math.max(z - 0.25, 0.5))} className="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-400" title="Zoom Out"><ZoomOut size={12} /></button>
+          <button onClick={handleDownload} className="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-400" title="Download SVG"><Download size={12} /></button>
+          <button onClick={handleExportCSV} className="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-400" title="Export CSV"><Trash2 size={12} className="rotate-180" /></button>
         </div>
       </div>
 
@@ -165,11 +180,26 @@ const InteractiveGraph: React.FC<InteractiveGraphProps> = ({
                   />
                 )}
 
+                {/* Error Bars */}
+                {s.errorY && s.points.map((p, pi) => {
+                  const err = s.errorY![pi];
+                  if (!err) return null;
+                  const yTop = toSvgY(p.y + err);
+                  const yBot = toSvgY(p.y - err);
+                  return (
+                    <g key={`eb${pi}`} opacity="0.6">
+                      <line x1={toSvgX(p.x)} y1={yTop} x2={toSvgX(p.x)} y2={yBot} stroke={s.color} strokeWidth="1" />
+                      <line x1={toSvgX(p.x) - 3} y1={yTop} x2={toSvgX(p.x) + 3} y2={yTop} stroke={s.color} strokeWidth="1" />
+                      <line x1={toSvgX(p.x) - 3} y1={yBot} x2={toSvgX(p.x) + 3} y2={yBot} stroke={s.color} strokeWidth="1" />
+                    </g>
+                  );
+                })}
+
                 {/* Points */}
                 {s.points.map((p, pi) => (
                   <circle
                     key={pi}
-                    cx={toSvgX(p.x)} cy={toSvgY(p.y)} r="5"
+                    cx={toSvgX(p.x)} cy={toSvgY(p.y)} r="4"
                     fill={s.color} stroke="white" strokeWidth="1.5"
                     style={{ cursor: 'pointer' }}
                     onMouseEnter={() => setHoveredPt({ x: p.x, y: p.y, sx: toSvgX(p.x), sy: toSvgY(p.y), label: s.label })}
