@@ -47,9 +47,13 @@ interface UniversalScenario {
 }
 
 const RichProceduralLab = ({ 
-    scenario 
+    scenario,
+    labId,
+    hex,
 }: { 
-    scenario: UniversalScenario
+    scenario: UniversalScenario;
+    labId: string;
+    hex: string;
 }) => {
     const { title, simulation_steps, color, result_summary, fact, warnings } = scenario;
     const [currentStep, setCurrentStep] = useState(0);
@@ -70,7 +74,7 @@ const RichProceduralLab = ({
     };
 
     return (
-        <div className="flex flex-col md:flex-row h-full w-full bg-slate-100 dark:bg-slate-900 transition-colors">
+        <div className="flex md:flex-row h-full w-full bg-slate-100 dark:bg-slate-900 transition-colors">
             {/* Visual Stage */}
             <div className="flex-1 relative p-8 flex items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-200 to-slate-300 dark:from-slate-800 dark:to-slate-900 transition-all">
                 {/* Warnings Overlay */}
@@ -179,6 +183,7 @@ const RichProceduralLab = ({
                     )}
                 </div>
             </div>
+            <ScientificPanel labId={labId} hex={hex} />
         </div>
     );
 };
@@ -654,7 +659,7 @@ const SimulationStage: React.FC<SimulationStageProps> = ({ subjectId, labId, hex
 
     // Fallback for others to procedural
     const scenario = LAB_SCENARIOS[labId];
-    if (scenario) return <RichProceduralLab scenario={scenario} />;
+    if (scenario) return <RichProceduralLab scenario={scenario} labId={labId} hex={hex} />;
 
     // --- GENERIC FALLBACK (If somehow still missing) ---
     return <div className="flex items-center justify-center h-full text-gray-500 bg-slate-100 dark:bg-slate-900"><div className="text-center"><FlaskConical size={48} className="mx-auto mb-4 opacity-20" /><p>Select a specific module to begin.</p></div></div>;
