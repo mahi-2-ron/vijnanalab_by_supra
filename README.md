@@ -44,14 +44,21 @@ It integrates **Google Gemini API** for intelligent features and provides a clea
    git clone https://github.com/mahi-2-ron/vijnanalab_by_supra.git
    cd vijnanalab_by_supra
 
-Install dependenciesBashnpm install
-# or
-pnpm install
-Create .env.local in the root and add your key:envGEMINI_API_KEY=your-gemini-api-key-hereImportant: Never commit .env.local — it's already in .gitignore
-Start the development serverBashnpm run dev
-# or
-pnpm devOpen http://localhost:5173 (or the port Vite shows)
+2. **Install dependenciesBashnpm install**
+```
+npm install
+```
+3. **Create .env.local in the root and add your key:**
+   ```env
+   GEMINI_API_KEY=your-gemini-api-key-here
+   ```
+   | Important: Never commit .env.local — it's already in .gitignore
+5. **Start the development server**
+   ```Bash
+   npm run dev
+Open http://localhost:5173 (or the port Vite shows)
 ---
+
 📁 Project Structure
 ```
 textvijnanalab_by_supra/
@@ -74,6 +81,7 @@ textvijnanalab_by_supra/
 └── README.md
 ```
 ---
+
 🔑 Getting a Gemini API Key
 
 Go to → https://aistudio.google.com/app/apikey
@@ -82,14 +90,15 @@ Create new API key
 Copy and paste into .env.local
 
 Rate limits and safety settings apply — refer to official Gemini documentation.
+---
 🤝 Contributing
 Contributions are welcome!
 
-Fork the repo
-Create a feature branch (git checkout -b feature/amazing-thing)
-Commit changes (git commit -m 'Add amazing thing')
-Push (git push origin feature/amazing-thing)
-Open a Pull Request
+1.Fork the repo
+2.Create a feature branch (git checkout -b feature/amazing-thing)
+3.Commit changes (git commit -m 'Add amazing thing')
+4.Push (git push origin feature/amazing-thing)
+5.Open a Pull Request
 
 📜 License
 MIT License 
