@@ -1,12 +1,99 @@
+# Vijnana Lab
+
+**Vijnana Lab** is a modern web application that serves as an interactive experimentation platform / AI-powered workspace.  
+It integrates **Google Gemini API** for intelligent features and provides a clean, component-based React frontend with supporting backend/service logic.
+
+"Vijnana" (विज्ञान) — Sanskrit for systematic knowledge, science, or consciousness — reflects the project's aim to create a thoughtful, AI-assisted lab-like environment.
+
+## ✨ Features
+
+- Clean, modular React + TypeScript frontend
+- Page-based routing structure
+- Reusable UI components
+- Google Gemini AI integration (chat / generation / analysis capabilities)
+- Authentication flow
+- Dedicated services layer for API clients & external integrations
+- Lightweight server-side logic folder (proxy, helpers, or custom endpoints)
+
+## 🛠️ Tech Stack
+
+| Layer          | Technology                     |
+|----------------|--------------------------------|
+| Frontend       | React, TypeScript, Vite        |
+| Styling        | CSS (or Tailwind / others*)    |
+| Build Tool     | Vite                           |
+| AI Integration | Google Gemini API              |
+| Authentication | Custom / provider-based        |
+| Language       | TypeScript (96%+), HTML,       |
+| Package Manager| npm / pnpm                     |
+
+*Note: Check `components/` and `pages/` for actual styling approach.
+
+## 🚀 Quick Start (Run Locally)
+
+### Prerequisites
+
+- Node.js ≥ 18
+- A Google Gemini API key [](https://aistudio.google.com/app/apikey)
+
+### Steps
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/mahi-2-ron/vijnanalab_by_supra.git
+   cd vijnanalab_by_supra
+
+Install dependenciesBashnpm install
+# or
+pnpm install
+Create .env.local in the root and add your key:envGEMINI_API_KEY=your-gemini-api-key-hereImportant: Never commit .env.local — it's already in .gitignore
+Start the development serverBashnpm run dev
+# or
+pnpm devOpen http://localhost:5173 (or the port Vite shows)
+
+📁 Project Structure
+textvijnanalab_by_supra/
+├── components/         # Reusable UI components
+├── pages/              # Route/page level components
+├── server/             # Backend logic, proxies, helpers
+├── services/           # API clients, external service wrappers
+├── public/             # (if exists) static assets
+├── src/                # (if using src/ layout)
+│   ├── App.tsx
+│   └── ...
+├── auth.html           # Authentication entry / helper
+├── autopush.py         # Deployment / git automation script
+├── constants.ts
+├── types.ts
+├── vite.config.ts
+├── tsconfig.json
+├── package.json
+├── .env.local          (create yourself – do NOT commit)
+└── README.md
+🔑 Getting a Gemini API Key
+
+Go to → https://aistudio.google.com/app/apikey
+Sign in with Google account
+Create new API key
+Copy and paste into .env.local
+
+Rate limits and safety settings apply — refer to official Gemini documentation.
+🤝 Contributing
+Contributions are welcome!
+
+Fork the repo
+Create a feature branch (git checkout -b feature/amazing-thing)
+Commit changes (git commit -m 'Add amazing thing')
+Push (git push origin feature/amazing-thing)
+Open a Pull Request
+
+📜 License
+MIT License 
+
+🙏 Acknowledgments
+Everyone who has contributed commits & ideas
 
 
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Made with 💡 in India by TeamSupra
+Last major update: March 2026
